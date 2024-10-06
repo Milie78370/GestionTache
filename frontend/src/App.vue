@@ -15,6 +15,7 @@ import HelloWorld from './components/HelloWorld.vue'
         <nav>
           <RouterLink to="/">Créer tâche</RouterLink>
           <RouterLink to="/listeTache">Voir toutes les tâches</RouterLink>
+          <RouterLink to="/affectation">Affectation de tâches</RouterLink>
         </nav>
       </div>
     </header>

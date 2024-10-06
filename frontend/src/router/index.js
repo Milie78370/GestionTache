@@ -12,10 +12,15 @@ const router = createRouter({
     {
       path: '/listeTache',
       name: 'listeTache',
+      component: () => import('../views/TasksView.vue')
+    },
+    {
+      path: '/affectation',
+      name: 'affectation',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AssignmentTask.vue')
     }
   ]
 })

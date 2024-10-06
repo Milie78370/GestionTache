@@ -38,13 +38,11 @@ export default {
         heureDeb: heureDeb.value,
         heureFin: heureFin.value
       }
-      console.log(tasks)
       context.emit('createTask', tasks)
       resetForm()
     }
 
     onMounted(() => {
-      console.log('onMounted | txtName.value', txtName.value);
       txtName.value.focus();
     })
 
