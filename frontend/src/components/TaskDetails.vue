@@ -5,10 +5,7 @@
             <h6 class="card-text">HeureDeb : {{ task.heureDeb }}</h6>
             <p class="card-text">HeureFin : {{ task.heureFin }}</p>
             <div v-show="isAffectation">
-                <select>
-                    <option value=""></option>
-                </select>
-                <button @click="() => updateTasks()">Confirmer</button>
+                <EmployeDetailsVue :employe="employe" @affectationTache="updateTasks"/>
             </div>
             <div v-show="!isAffectation">
                 <button @click="editTask">Modifier</button>
@@ -19,6 +16,9 @@
 </template>
 
 <script>
+import EmployeDetailsVue from './EmployeDetails.vue';
+
+
 export default {
     props: {
         task: {
@@ -26,14 +26,28 @@ export default {
         },
         isAffectation: {
             required: true
+        },
+        employe: {
+            required: true
         }
+    },
+    components: {
+        EmployeDetailsVue
     },
     setup(props, context){
         const deleteTasks = (tacheId) =>{
             context.emit("deleteTask", tacheId);
         }
+
+        const updateTasks = (emp_id) => {
+            const task_id = props.task.tache_id;
+            context.emit("updateTasks",emp_id, task_id);
+        }
+
+
         return {
-            deleteTasks
+            deleteTasks,
+            updateTasks
         }
     }
 }
