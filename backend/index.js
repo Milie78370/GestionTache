@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import connectDB from "./config/config.js"
 import taskRouter from "./routes/taskRoute.js"
+import userRouter from "./routes/userRoute.js"
 
 //config api
 const app = express()
@@ -15,6 +16,7 @@ connectDB();
 
 // endpoint api
 app.use("/task", taskRouter)
+app.use("/user", userRouter)
 
 app.get("/", (request, response)=>{
     response.send("API Working")
