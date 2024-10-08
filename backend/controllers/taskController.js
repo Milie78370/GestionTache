@@ -1,3 +1,4 @@
+import { request } from "express";
 import connectDB from "../config/config.js"
 
 const connection = await connectDB();
@@ -45,6 +46,7 @@ const getTask = async (request, response) => {
     }
 }
 
+
 const removeTask = (request, response) => {
     try {
         const task_removeId = request.body.tache_id;
@@ -68,6 +70,42 @@ const removeTask = (request, response) => {
 
 }
 
+const updateTask = (request, response) => {
+    try {
+        const {emp_id, task_id} = request.body;
+        connection.query(
+            'UPDATE tache SET emp_id = ? Where tache_id = ?',
+            [emp_id, task_id],
+            (err, result) => {
+              if (err) throw err;
+          
+              response.json({success: true, message: "Update de la tache"});
+            }
+            
+          );
+    } catch(err) {
+        response.json({success: false, message: err.message});
+    }
+}
 
 
-export {addTask, getTask, removeTask}
+const getDataTask = (request, response) => {
+    try {
+        let tasks = [] ;
+        const {task_id}= request.body;
+        connection.query('SELECT emp_id, heureDeb, heureFin  FROM tache where tache_id =?', [task_id] , (err,rows) => {
+            if(err) {
+                throw err;
+            } else {
+                tasks = Object.values(JSON.parse(JSON.stringify(rows))); 
+                response.json({success: true, data: tasks});
+
+            }
+        });
+    } catch (err) {
+        response.json({success: false, message: err.message});
+    }
+}
+
+
+export {addTask, getTask, removeTask, updateTask, getDataTask}
