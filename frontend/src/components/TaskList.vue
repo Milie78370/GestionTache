@@ -1,16 +1,20 @@
 <template>
     <div>
-        <TaskDetails 
-            :task='task' 
-            :employe="employe" 
-            :isAffectation="isAffectation" 
-            :isTacheAffected="isTacheAffected"
-            v-for="task in tasks" 
-            :key="task.tache_id" 
-            @deleteTask="deleteTasks"
-            @updateTasks="updateTasks"
-        />
+        <h3 v-show="isAffectation">Affectation de tâches : </h3>
+        <h3 v-if="!isAffectation">Voir toutes les tâches : </h3>
+        <div class="taskDetails">
+            <TaskDetails 
+                :task='task'
+                :employe="employe" 
+                :isAffectation="isAffectation" 
+                v-for="task in tasks" 
+                :key="task.tache_id" 
+                @deleteTask="deleteTasks"
+                @updateTasks="updateTasks"
+            />
+         </div>
     </div>
+   
 </template>
 
 <script>
@@ -27,9 +31,6 @@ export default {
         },
         employe: {
             required: false
-        },
-        isTacheAffected: {
-            required: false
         }
 
     },
@@ -37,10 +38,18 @@ export default {
         TaskDetails,
     },
     setup(props, context) {
+        /**
+         * Fonction qui envoie un custom event vers la page
+         * parent Assignment, avec payload tache_id
+         */
         const deleteTasks = (tacheId) => {
             context.emit("deleteTaskFromList", tacheId);
         }
 
+        /**
+         * Fonction qui envoie un custom event vers la page
+         * parent Assignment, avec payload tache_id, employe_id
+         */
         const updateTasks = (emp_id, task_id) => {
             context.emit("updateTasks", emp_id, task_id);
         }
@@ -53,6 +62,13 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.taskDetails{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+h3{
+    font-family: "Montserrat", sans-serif;
+}
 </style>

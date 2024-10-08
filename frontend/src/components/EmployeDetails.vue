@@ -1,20 +1,19 @@
 <template>
   <div>
     <div>
-      <div v-show="task_emp.emp_id" v-for="task_emp in isTacheAffected" :key="task_emp.emp_id">
-        <p>La tâche est affectée :{{ emp_id_task }} {{ task_emp.nom }}</p>
+      <div v-show="emp.emp_id == emp_id_task" v-for="emp in employe" :key="emp.emp_id">
+        <p>La tâche est affectée : <strong>{{ emp.nom }}</strong></p>
       </div>
-      <select v-model="emp_id">
+      <select class="custom-select" v-model="emp_id">
         <option
           v-for="emp in employe"
           :key="emp.emp_id"
           :value="emp.emp_id"
-          :selected="emp.emp_id === emp.emp_id"
         >
-          <p>{{ emp.nom }}</p>
+        {{ emp.nom }}
         </option>
       </select>
-      <button @click="() => updateTasks(emp_id)">Confirmer</button>
+      <button class="btn btn-success" @click="() => updateTasks(emp_id)">Confirmer</button>
     </div>
   </div>
 </template>
@@ -27,9 +26,6 @@ export default {
     employe: {
       required: true
     },
-    isTacheAffected: {
-      required: true
-    },
     emp_id_task: {
       required: false
     }
@@ -37,6 +33,10 @@ export default {
   setup(props, context) {
     let emp_id = ref('')
 
+    /**
+     * Fonction qui a pour seul objectif d'emettre un custom event vers
+     * le composant parent TaskDetails, le payload est l'employe id
+     */
     const updateTasks = (emp_id) => {
       context.emit('affectationTache', emp_id)
     }
@@ -49,5 +49,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+button{
+  margin-left: 50px;
+  background-color: #42b983;
+}
+p {
+  font-family: "Montserrat", sans-serif;
+}
+.custom-select{
+  width: 85px;
+}
 </style>

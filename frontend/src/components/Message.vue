@@ -1,10 +1,13 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true
+<script>
+export default {
+  name: "MessageComponent",
+  props: {
+    msg: {
+      type: String,
+      required: true
+    }
   }
-})
+}
 </script>
 
 <template>

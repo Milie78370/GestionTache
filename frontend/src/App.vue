@@ -1,6 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import Message from './components/Message.vue'
 </script>
 
 <template>
@@ -9,7 +9,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
       <div class="wrapper">
-        <HelloWorld msg="Projet tâches" />
+        <Message msg="Projet technique" />
         <h2>Bienvenue sur la plannification des tâches</h2>
         
         <nav>
@@ -33,6 +33,9 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+h2{
+  font-family: "Montserrat", sans-serif;
 }
 
 nav {

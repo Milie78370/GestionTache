@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="task">
     <div class="radio-filters">
       <label for="libelle">
         <input type="radio" id="all" value="" v-model="choixFiltrage" />
@@ -7,31 +7,31 @@
       </label>
       <label for="libelle">
         <input type="radio" id="libelle" value="libelle" v-model="choixFiltrage" />
-        libelle
+        Libelle
       </label>
       <label for="heureDeb">
         <input type="radio" id="heureDeb" value="heureDeb" v-model="choixFiltrage" />
-        heure de début
+        Heure de début
       </label>
       <label for="heureFin">
         <input type="radio" id="heureFin" value="heureFin" v-model="choixFiltrage" />
-        heure de fin
+        Heure de fin
       </label>
     </div>
     <br />
     
-    <h3>Trié par :</h3>
+    <h5>Trié par :</h5>
     <div class="radio-filters-trie">
       <label for="ordre croissant">
         <input type="radio" id="ordreCroissant" value="asc" v-model="modeDeTrie" />
-        ordre croissant
+        Ordre croissant
       </label>
       <label for="ordre decroissant">
         <input type="radio" id="ordreDecroissant" value="desc" v-model="modeDeTrie" />
-        ordre décroissant
+        Ordre décroissant
       </label>
     </div>
-    
+    <hr>
     <TaskList :tasks="tasks" :isAffectation="isAffectation" @deleteTaskFromList="deleteTasks" />
   </div>
 </template>
@@ -53,26 +53,35 @@ export default {
     let tasksFiltered = ref([]);
     const isAffectation = ref(false);
 
+    /**
+     * Appel du endpoint task list, pour récuperer toutes les tâches
+     * Initialisation de tasks.value avec le tableau de données
+     */
     const getAllTasks = async () => {
-      const response = await axios.get(`http://localhost:4000/task/list`)
+      const response = await axios.get(`http://localhost:4000/task/list`);
       if (response.data.success) {
-        tasks.value = response.data.data
-        console.log('Recupération réussie')
+        tasks.value = response.data.data;
+        console.log('Recupération réussie');
       } else {
-        console.log('Recupération echoue')
+        console.log('Recupération echoue');
       }
     }
 
+    /**
+     * Appel du endpoint task remove, pour supprimer une tâches
+     * 
+     */
     const deleteTasks = async (tacheId) => {
       const taskRemove = {
         tache_id: tacheId
-      }
-      const response = await axios.post(`http://localhost:4000/task/remove`, taskRemove)
+      };
+
+      const response = await axios.post(`http://localhost:4000/task/remove`, taskRemove);
       if (response.data.success) {
-        console.log('suppression de la tâche')
-        getAllTasks()
+        console.log('suppression de la tâche');
+        getAllTasks();
       } else {
-        console.log('Echoue de la tâche')
+        console.log('Echoue de la tâche');
       }
     }
 
@@ -80,8 +89,11 @@ export default {
       getAllTasks()
     })
 
-    const editTask = () => {}
-
+    /**
+     * Fonction de filtrage par rapport aux valeurs des inputs (libelle, heureDeb, heureFin)
+     * et du mode de trie (asc, desc)
+     * @return void
+     */
     const filtrageTask = () => {
       if (modeDeTrie.value === 'asc' && choixFiltrage.value === 'libelle') {
         tasksFiltered.value = tasks.value.sort((a, b) => a.libelle.localeCompare(b.libelle))
@@ -98,8 +110,11 @@ export default {
       }
     }
 
-    watch(modeDeTrie,(newValueModeDeTrie, oldValueChoixFiltrage) => {
-        console.log('newValue: ', newValueModeDeTrie, 'oldValue: ', oldValueChoixFiltrage)
+    /**
+     * Mise en place de l'observateur qui va ecoute par rapport aux changements
+     * de modeDeTrie si rien selectionnée on affiche tous sinon on trie
+     */
+    watch(modeDeTrie,(newValueModeDeTrie) => {
         if (newValueModeDeTrie !== '') {
           filtrageTask();
         } else {
@@ -115,7 +130,6 @@ export default {
       choixFiltrage,
       deleteTasks,
       tasksFiltered,
-      editTask,
       modeDeTrie,
       filtrageTask,
       isAffectation
@@ -127,7 +141,14 @@ export default {
 <style scoped>
 .task {
   margin: 10px 15px;
-  border: 3px solid #42b983;
-  border-radius: 5px;
+}
+
+label, input{
+  margin-right: 10px;
+}
+
+h3{
+  font-family: "Montserrat", sans-serif;
+  font-style: italic;
 }
 </style>
