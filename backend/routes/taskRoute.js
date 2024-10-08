@@ -3,10 +3,11 @@ import {addTask, getTask, removeTask, updateTask, getDataTask} from "../controll
 
 const taskRouter = express.Router();
 
+// endPoint specifique aux tâches
 taskRouter.post("/add", addTask);
 taskRouter.post("/remove", removeTask);
-taskRouter.get("/list", getTask);
 taskRouter.post("/getDataTask", getDataTask);
+taskRouter.get("/list", getTask);
 taskRouter.put("/update", updateTask);
 
 export default taskRouter;

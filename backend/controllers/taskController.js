@@ -3,6 +3,12 @@ import connectDB from "../config/config.js"
 
 const connection = await connectDB();
 
+/**
+ * Ajouter une tache dans la base
+ * @param {*} request Requête HTTP envoyé par le front, donnée envoyé en JSON
+ * @param {*} response Response HTTP qui sera envoyé au front donnée envoyé en JSON
+ * 
+ */
 const addTask = (request, response) => {
     try {
         const tasks = {
@@ -16,7 +22,7 @@ const addTask = (request, response) => {
             } else {
                 response.json({
                     success: true,
-                    message:"Tache sauvegardee"
+                    message:"Tâche sauvegardee"
                 })
             }
           });
@@ -30,6 +36,12 @@ const addTask = (request, response) => {
 
 }
 
+/**
+ * Récupérer une tache depuis la base
+ * @param {*} request Requête HTTP envoyé par le front, donnée envoyé en JSON
+ * @param {*} response Response HTTP qui sera envoyé au front donnée envoyé en JSON
+ * 
+ */
 const getTask = async (request, response) => {
     try {
         let tasks = [];
@@ -46,7 +58,12 @@ const getTask = async (request, response) => {
     }
 }
 
-
+/**
+ * Supprime une tache de la base
+ * @param {*} request Requête HTTP envoyé par le front, donnée envoyé en JSON
+ * @param {*} response Response HTTP qui sera envoyé au front donnée envoyé en JSON
+ * 
+ */
 const removeTask = (request, response) => {
     try {
         const task_removeId = request.body.tache_id;
@@ -56,7 +73,7 @@ const removeTask = (request, response) => {
             } else {
                 response.json({
                     success: true,
-                    message:"Tache supprimée"
+                    message:"Tâche supprimée"
                 })
             }
           });
@@ -70,16 +87,22 @@ const removeTask = (request, response) => {
 
 }
 
+/**
+ * Met à jour une tache de la base
+ * @param {*} request Requête HTTP envoyé par le front, donnée envoyé en JSON
+ * @param {*} response Response HTTP qui sera envoyé au front donnée envoyé en JSON
+ * 
+ */
 const updateTask = (request, response) => {
     try {
         const {emp_id, task_id} = request.body;
         connection.query(
             'UPDATE tache SET emp_id = ? Where tache_id = ?',
             [emp_id, task_id],
-            (err, result) => {
+            (err) => {
               if (err) throw err;
           
-              response.json({success: true, message: "Update de la tache"});
+              response.json({success: true, message: "Update de la tâche"});
             }
             
           );
@@ -88,10 +111,15 @@ const updateTask = (request, response) => {
     }
 }
 
-
+/**
+ * Récupère les informations employe_id, heure de début, heure de fin depuis la base
+ * @param {*} request Requête HTTP envoyé par le front, donnée envoyé en JSON
+ * @param {*} response Response HTTP qui sera envoyé au front donnée envoyé en JSON
+ * 
+ */
 const getDataTask = (request, response) => {
     try {
-        let tasks = [] ;
+        let tasks = [];
         const {task_id}= request.body;
         connection.query('SELECT emp_id, heureDeb, heureFin  FROM tache where tache_id =?', [task_id] , (err,rows) => {
             if(err) {
