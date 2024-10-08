@@ -4,6 +4,7 @@
             :task='task' 
             :employe="employe" 
             :isAffectation="isAffectation" 
+            :isTacheAffected="isTacheAffected"
             v-for="task in tasks" 
             :key="task.tache_id" 
             @deleteTask="deleteTasks"
@@ -27,6 +28,10 @@ export default {
         employe: {
             required: false
         },
+        isTacheAffected: {
+            required: false
+        }
+
     },
     components: {
         TaskDetails,

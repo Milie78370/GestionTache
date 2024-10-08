@@ -5,7 +5,7 @@
             <h6 class="card-text">HeureDeb : {{ task.heureDeb }}</h6>
             <p class="card-text">HeureFin : {{ task.heureFin }}</p>
             <div v-show="isAffectation">
-                <EmployeDetailsVue :employe="employe" @affectationTache="updateTasks"/>
+                <EmployeDetailsVue :employe="employe" @affectationTache="updateTasks" :isTacheAffected="isTacheAffected"  :emp_id_task="task.emp_id"/>
             </div>
             <div v-show="!isAffectation">
                 <button @click="editTask">Modifier</button>
@@ -29,6 +29,9 @@ export default {
         },
         employe: {
             required: true
+        },
+        isTacheAffected: {
+            required: false
         }
     },
     components: {
@@ -44,10 +47,10 @@ export default {
             context.emit("updateTasks",emp_id, task_id);
         }
 
-
+       
         return {
             deleteTasks,
-            updateTasks
+            updateTasks,
         }
     }
 }
