@@ -13,6 +13,6 @@ npm run dev
 ```bash
 npm run server
 ```
-Pour le backEnd, je n'ai pas inclus le fichier access, à la base de donnée, vous devez en creer un : 
-créer un repertoire dans config, à la racine de backend avec un fichier db.js
+Pour le backEnd, a la base de donnée, la base de donnée s'appelle : gestiontaches
+Il se trouve dans le repertoire dans config, à la racine de backend avec un fichier db.js
 

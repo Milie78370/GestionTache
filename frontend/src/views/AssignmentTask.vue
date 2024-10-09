@@ -210,6 +210,7 @@ export default {
       const tempsFin = getMinute(heureFin);
 
       let totalMinutes = 0;
+      //Si la tâche commence tard dans la soirée et se finit le lendemain alors pour éviter d' avoir un nombre négatif on soustrait (24*60) = 1440 - début + fin.
       if (tempsFin < tempsDeb) {
         totalMinutes = 1440 - tempsDeb + tempsFin;
       } else {
